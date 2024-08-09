@@ -1,0 +1,13 @@
+<aside>
+    <ul class="navigation">
+        @for (item of navigationItems; track item.id) {
+            <li>
+                <a
+                    class="navigation__item"
+                >
+                    <span>{{ item.title }}</span>
+                </a>
+            </li>
+          }
+    </ul>
+</aside>

@@ -1,0 +1,18 @@
+:host {
+    display: block;
+}
+
+aside {
+    .navigation {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+
+    .navigation__item {
+        padding: 0;
+        list-style-type: none;
+    }
+}
+
