@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   catchError,
   delay,
   EMPTY,
+  finalize,
   map,
   of,
   take,
@@ -12,10 +13,13 @@ import {
 
 import { GROUPS_MOCK } from 'api-mocks';
 import { NavigationItem } from 'shared-components';
+import { LoaderService } from 'core-services';
 import { adaptGroupToNavigation } from '../utils/adaptor-group-to-navigation';
 
 @Injectable()
 export class DataService {
+  #loaderService = inject(LoaderService);
+
   #groupNavigationSubject = new BehaviorSubject<NavigationItem[]>([]);
   public groupNavigation$ = this.#groupNavigationSubject.asObservable();
 
@@ -23,6 +27,8 @@ export class DataService {
   public currentGroup$ = this.#currentGroupSubject.asObservable();
 
   loadGroups() {
+    this.#loaderService.setLoader(true);
+
     of(GROUPS_MOCK)
       .pipe(
         delay(1000),
@@ -41,7 +47,8 @@ export class DataService {
           this.#currentGroupSubject.next(null);
 
           return EMPTY;
-        })
+        }),
+        finalize(() => this.#loaderService.setLoader(false))
       )
       .subscribe();
   }

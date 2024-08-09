@@ -1,3 +1,10 @@
   <main class="main">
       <router-outlet/>
+
+      <!-- Can be moved to separate component -->
+      @if (loaderService.loading$ | async) {
+        <div class="loader">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
   </main>

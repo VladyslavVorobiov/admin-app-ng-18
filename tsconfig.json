@@ -26,6 +26,7 @@
     "paths": {
       "api-models": ["./src/app/core/api/models"],
       "api-mocks": ["./src/app/core/api/mocks"],
+      "core-services": ["./src/app/core/services"],
       "shared-components": ["./src/app/shared/components"],
       "shared-enums": ["./src/app/shared/enums"],
     },
