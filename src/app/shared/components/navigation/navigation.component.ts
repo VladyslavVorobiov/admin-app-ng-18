@@ -15,7 +15,7 @@ import { NavigationItem } from './models';
 })
 export class NavigationComponent {
   items = input.required<NavigationItem[]>();
-  current = input.required<NavigationItem>();
+  current = input.required<NavigationItem | null>();
 
   clickedItem = output<NavigationItem>();
 

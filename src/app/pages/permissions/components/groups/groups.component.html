@@ -1,8 +1,7 @@
-@let groupNavigation = (groupNavigation$ | async) || [];
 
 <app-navigation
-  [items]="groupNavigation"
-  [current]="current || groupNavigation[0]"
+  [items]="(groupNavigation$ | async) || []"
+  [current]="currentGroup$ | async"
   (clickedItem)="onGroupClick($event)"
 />
 
