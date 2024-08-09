@@ -14,11 +14,35 @@ aside {
     }
 
     .navigation__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
         padding: 8px;
-        list-style-type: none;
         border: 2px solid var(--black);
+        list-style-type: none;
         background-color: var(--light-grey);
         cursor: pointer;
+
+        .action-button {
+            width: 30px;
+            height: 30px;
+
+            .mat-icon {
+                width: 20px;
+                height: 20px;
+                font-size: 20px;
+            }
+        }
+
+        .action-button--hidden {
+            visibility: hidden;
+        }
+    }
+
+    .title-input {
+        width: 130px;
+        height: 50px;
     }
 
     .navigation__item--curent {

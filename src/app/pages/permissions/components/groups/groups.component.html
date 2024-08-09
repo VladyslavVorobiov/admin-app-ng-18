@@ -1,8 +1,9 @@
 
 <app-navigation
   [items]="(groupNavigation$ | async) || []"
-  [current]="currentGroup$ | async"
+  [currentId]="(currentId$ | async ) || ''"
   (clickedItem)="onGroupClick($event)"
+  (itemChanged)="onItemChanged($event)"
 />
 
 <div class="groups-content">

@@ -25,14 +25,17 @@ export class GroupsComponent implements OnInit {
   groupNavigation$: Observable<NavigationItem[]> =
     this.#dataService.groupNavigation$;
 
-  currentGroup$: Observable<NavigationItem | null> =
-    this.#dataService.currentGroup$;
+  currentId$: Observable<string> = this.#dataService.currentId$;
 
   ngOnInit() {
     this.#dataService.loadGroups();
   }
 
   onGroupClick(group: NavigationItem) {
-    this.#dataService.setCurrentGroup(group);
+    this.#dataService.setCurrentId(group.id);
+  }
+
+  onItemChanged(group: NavigationItem) {
+    this.#dataService.updateGroup(group);
   }
 }

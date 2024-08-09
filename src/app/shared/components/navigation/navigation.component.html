@@ -2,10 +2,34 @@
     <ul class="navigation">
         @for (item of items(); track item.id) {
             <li class="navigation__item"
-                [class.navigation__item--curent]="item === current()"
+                [class.navigation__item--curent]="item.id === currentId()"
                 (click)="onItemClick(item)"
             >
-                <span>{{ item.title }}</span>
+                @if(editable.id === item.id) {
+                    <mat-form-field class="title-input" subscriptSizing="dynamic">
+                        <input matInput type="text" [(ngModel)]="editable.title">
+                      </mat-form-field>
+                } 
+                @else {
+                    <span>{{ item.title }}</span>
+                }
+
+                @if (editable.id === item.id) {
+                    <button mat-mini-fab class="action-button" 
+                        (click)="onSaveTitle(item)"
+                    >
+                        <mat-icon>save</mat-icon>
+                    </button>
+                }
+                @else {
+                    <button mat-mini-fab class="action-button"
+                        [class.action-button--hidden]="item.id !== currentId() || editable.id === item.id"
+                        [disabled]="item.id !== currentId()"
+                        (click)="onEditClick(item)"
+                    >
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                }
             </li>
           }
     </ul>

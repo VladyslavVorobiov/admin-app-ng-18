@@ -1,6 +1,6 @@
-import { Groups, Right } from 'api-models';
+import { Group, Right } from 'api-models';
 
-export const GROUPS_MOCK: Groups[] = [
+export const GROUPS_MOCK: Group[] = [
   {
     id: '1-Admins',
     name: 'Admins',
@@ -210,3 +210,14 @@ export const GROUPS_MOCK: Groups[] = [
     ],
   },
 ];
+
+export function updateGroupNameById(id: string, name: string): Group[] {
+  const groupIndex = GROUPS_MOCK.findIndex((group) => group.id === id);
+
+  if (groupIndex === -1) return GROUPS_MOCK;
+
+  const group = GROUPS_MOCK[groupIndex];
+  group.name = name;
+
+  return [...GROUPS_MOCK];
+}
