@@ -1,14 +1,25 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { NavigationItem } from './models';
-import { NAVIGATION_ITEMS } from './constants/navigation.constants';
 
 @Component({
-    standalone: true,
-    selector: 'app-navigation',
-    templateUrl: './navigation.component.html',
-    styleUrls: ['./navigation.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent {
-    public navigationItems: NavigationItem[] = NAVIGATION_ITEMS;
+  items = input.required<NavigationItem[]>();
+  current = input.required<NavigationItem>();
+
+  clickedItem = output<NavigationItem>();
+
+  onItemClick(item: NavigationItem) {
+    this.clickedItem.emit(item);
+  }
 }

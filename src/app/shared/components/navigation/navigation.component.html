@@ -1,12 +1,11 @@
 <aside>
     <ul class="navigation">
-        @for (item of navigationItems; track item.id) {
-            <li>
-                <a
-                    class="navigation__item"
-                >
-                    <span>{{ item.title }}</span>
-                </a>
+        @for (item of items(); track item.id) {
+            <li class="navigation__item"
+                [class.navigation__item--curent]="item === current()"
+                (click)="onItemClick(item)"
+            >
+                <span>{{ item.title }}</span>
             </li>
           }
     </ul>

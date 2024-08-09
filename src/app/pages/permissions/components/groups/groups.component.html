@@ -1,3 +1,11 @@
-<p>
-  groups works!
-</p>
+@let groupNavigation = (groupNavigation$ | async) || [];
+
+<app-navigation
+  [items]="groupNavigation"
+  [current]="current || groupNavigation[0]"
+  (clickedItem)="onGroupClick($event)"
+/>
+
+<div class="groups-content">
+
+</div>

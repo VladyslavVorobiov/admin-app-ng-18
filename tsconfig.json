@@ -24,6 +24,8 @@
       "dom"
     ],
     "paths": {
+      "api-models": ["./src/app/core/api/models"],
+      "api-mocks": ["./src/app/core/api/mocks"],
       "shared-components": ["./src/app/shared/components"],
       "shared-enums": ["./src/app/shared/enums"],
     },
