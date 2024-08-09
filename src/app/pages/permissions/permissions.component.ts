@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   standalone: true,
@@ -6,7 +7,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './permissions.component.html',
   styleUrls: ['./permissions.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatTabsModule],
 })
-export class PermissionsComponent {
-  
+export class PermissionsComponent     {
+
 }

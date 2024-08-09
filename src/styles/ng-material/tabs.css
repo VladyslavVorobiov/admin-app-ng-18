@@ -1,0 +1,5 @@
+mat-tab-group {
+    .mdc-tab__text-label {
+        font-size: var(--font-size-medium);
+    }
+}
