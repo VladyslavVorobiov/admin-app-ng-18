@@ -1,214 +1,47 @@
 import { Group, Right } from 'api-models';
 import { NavigationItem } from 'shared-components';
+import { ROLES_MOCK } from './roles.mock';
 
 export const GROUPS_MOCK: Group[] = [
   {
     id: '1-Admins',
     name: 'Admins',
-    roles: [
-      {
-        id: '1-Pizza-editor',
-        name: 'Pizza editor',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '2-Dust-sniffer',
-        name: 'Dust sniffer',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '3-Poker-cheater',
-        name: 'Poker cheater',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '4-Milk-user',
-        name: 'Milk user',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-    ],
+    roles: ROLES_MOCK.slice(0, 3),
   },
   {
     id: '2-General-Managers',
     name: 'General-Managers',
-    roles: [
-      {
-        id: '1-Pizza-editor',
-        name: 'Pizza editor',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '2-Dust-sniffer',
-        name: 'Dust sniffer',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '3-Poker-cheater',
-        name: 'Poker cheater',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '4-Milk-user',
-        name: 'Milk user',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-    ],
+    roles: ROLES_MOCK.slice(3, 5),
   },
   {
     id: '3-Managers-Tech',
     name: 'Managers-Tech',
-    roles: [
-      {
-        id: '1-Pizza-editor',
-        name: 'Pizza editor',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '2-Dust-sniffer',
-        name: 'Dust sniffer',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '3-Poker-cheater',
-        name: 'Poker cheater',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '4-Milk-user',
-        name: 'Milk user',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-    ],
+    roles: ROLES_MOCK.slice(5, 7),
   },
   {
     id: '4-Managers-Billing',
     name: 'Managers Billing',
-    roles: [
-      {
-        id: '1-Pizza-editor',
-        name: 'Pizza editor',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '2-Dust-sniffer',
-        name: 'Dust sniffer',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '3-Poker-cheater',
-        name: 'Poker cheater',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '4-Milk-user',
-        name: 'Milk user',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-    ],
+    roles: ROLES_MOCK.slice(2, 6),
   },
   {
     id: '5-Managers-Sales',
     name: 'Managers Sales',
-    roles: [
-      {
-        id: '1-Pizza-editor',
-        name: 'Pizza editor',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '2-Dust-sniffer',
-        name: 'Dust sniffer',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '3-Poker-cheater',
-        name: 'Poker cheater',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '4-Milk-user',
-        name: 'Milk user',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-    ],
+    roles: ROLES_MOCK,
   },
   {
     id: '6-Support-Tech',
     name: 'Support Tech',
-    roles: [
-      {
-        id: '1-Pizza-editor',
-        name: 'Pizza editor',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '2-Dust-sniffer',
-        name: 'Dust sniffer',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '3-Poker-cheater',
-        name: 'Poker cheater',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '4-Milk-user',
-        name: 'Milk user',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-    ],
+    roles: [ROLES_MOCK[0], ROLES_MOCK[5]],
   },
   {
     id: '7-Support-Billing',
     name: 'Support Billing',
-    roles: [
-      {
-        id: '1-Pizza-editor',
-        name: 'Pizza editor',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '2-Dust-sniffer',
-        name: 'Dust sniffer',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '3-Poker-cheater',
-        name: 'Poker cheater',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '4-Milk-user',
-        name: 'Milk user',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-    ],
+    roles: [ROLES_MOCK[2], ROLES_MOCK[7]],
   },
   {
     id: '8-Support-Sales',
     name: 'Support Sales',
-    roles: [
-      {
-        id: '1-Pizza-editor',
-        name: 'Pizza editor',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '2-Dust-sniffer',
-        name: 'Dust sniffer',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '3-Poker-cheater',
-        name: 'Poker cheater',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-      {
-        id: '4-Milk-user',
-        name: 'Milk user',
-        rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
-      },
-    ],
+    roles: [ROLES_MOCK[4], ROLES_MOCK[6]],
   },
 ];
 

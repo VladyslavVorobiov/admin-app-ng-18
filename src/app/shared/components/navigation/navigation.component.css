@@ -4,6 +4,7 @@
 }
 
 aside {
+    height: 100%;
     --item-height: 50px;
 
     .navigation {
@@ -54,8 +55,7 @@ aside {
 
     .navigation__item--empty {
         height: var(--item-height);
-    border-right: 2px solid var(--light-grey);
-
+        border-right: 2px solid var(--light-grey);
     }
 
     .title-input {
@@ -74,6 +74,7 @@ aside {
     .actions {
         display: flex;
         justify-content: center;
+        border-right: 2px solid var(--light-grey);
         padding: 8px;
     }
 }

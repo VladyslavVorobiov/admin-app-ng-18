@@ -18,12 +18,14 @@ import { addGroup, getGroups, updateGroupName } from 'api-mocks';
 import { NavigationItem } from 'shared-components';
 import { LoaderService } from 'core-services';
 import { adaptGroupToNavigation } from '../components/groups/utils/adaptor-group-to-navigation';
+import { RolesService } from './roles.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GroupService {
   #loaderService = inject(LoaderService);
+  #rolesService: RolesService = inject(RolesService);
 
   #currentIdSubject = new BehaviorSubject<string>('');
   public currentId$ = this.#currentIdSubject.asObservable();
@@ -54,11 +56,14 @@ export class GroupService {
     this.#updateGroupStream$,
     this.#addGroupStream$
   ).pipe(
-    map((response) => adaptGroupToNavigation(response)),
-    tap((data) =>
-      this.#currentIdSubject.next(this.#currentIdSubject.value || data[0].id)
-    ),
     tap(() => this.#loaderService.setLoader(false)),
+    map((response) => adaptGroupToNavigation(response)),
+    tap((data) => {
+      if (this.#currentIdSubject.value) return;
+
+      this.setCurrentId(data[0].id);
+      this.#rolesService.getRolesByGroupId(data[0].id);
+    }),
     catchError((error) => {
       // Handle error ...
 

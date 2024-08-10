@@ -4,7 +4,7 @@ import {
   Component,
   inject,
 } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,8 +14,12 @@ import {
   AddItemDialog,
   NavigationComponent,
   NavigationItem,
+  ToolbarComponent,
 } from 'shared-components';
 import { GroupService } from '../../services/group.service';
+import { RolesService } from '../../services/roles.service';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { RoleView } from '../../models';
 
 @Component({
   standalone: true,
@@ -23,27 +27,39 @@ import { GroupService } from '../../services/group.service';
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NavigationComponent, AsyncPipe, MatIcon, MatButtonModule],
+  imports: [
+    NavigationComponent,
+    AsyncPipe,
+    MatIcon,
+    MatButtonModule,
+    ToolbarComponent,
+    MatCheckbox,
+    NgFor,
+  ],
 })
 export class GroupsComponent implements AfterViewInit {
-  #dataService = inject(GroupService);
-  #dialog = inject(MatDialog);
+  #groupService: GroupService = inject(GroupService);
+  #rolesService: RolesService = inject(RolesService);
+  #dialog: MatDialog = inject(MatDialog);
 
   groupNavigation$: Observable<NavigationItem[]> =
-    this.#dataService.groupNavigation$;
+    this.#groupService.groupNavigation$;
 
-  currentId$: Observable<string> = this.#dataService.currentId$;
+  roles$: Observable<RoleView[]> = this.#rolesService.roles$;
+
+  currentId$: Observable<string> = this.#groupService.currentId$;
 
   ngAfterViewInit() {
-    this.#dataService.loadGroups();
+    this.#groupService.loadGroups();
   }
 
   onGroupClick(group: NavigationItem) {
-    this.#dataService.setCurrentId(group.id);
+    this.#groupService.setCurrentId(group.id);
+    this.#rolesService.getRolesByGroupId(group.id);
   }
 
   onItemChanged(group: NavigationItem) {
-    this.#dataService.updateGroup(group);
+    this.#groupService.updateGroup(group);
   }
 
   onAddGroup() {
@@ -56,6 +72,8 @@ export class GroupsComponent implements AfterViewInit {
         take(1),
         filter((result) => !!result)
       )
-      .subscribe((result) => this.#dataService.addGroup(result));
+      .subscribe((result) => this.#groupService.addGroup(result));
   }
+
+  onSaveRoles() {}
 }
