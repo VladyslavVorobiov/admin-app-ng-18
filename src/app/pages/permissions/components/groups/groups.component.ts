@@ -5,9 +5,16 @@ import {
   OnInit,
 } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { Observable } from 'rxjs';
+import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { filter, Observable, take } from 'rxjs';
 
-import { NavigationComponent, NavigationItem } from 'shared-components';
+import {
+  AddItemDialog,
+  NavigationComponent,
+  NavigationItem,
+} from 'shared-components';
 import { DataService } from './services/data.service';
 
 @Component({
@@ -16,11 +23,12 @@ import { DataService } from './services/data.service';
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NavigationComponent, AsyncPipe],
+  imports: [NavigationComponent, AsyncPipe, MatIcon, MatButtonModule],
   providers: [DataService],
 })
 export class GroupsComponent implements OnInit {
   #dataService = inject(DataService);
+  #dialog = inject(MatDialog);
 
   groupNavigation$: Observable<NavigationItem[]> =
     this.#dataService.groupNavigation$;
@@ -37,5 +45,18 @@ export class GroupsComponent implements OnInit {
 
   onItemChanged(group: NavigationItem) {
     this.#dataService.updateGroup(group);
+  }
+
+  onAddGroup() {
+    this.#dialog
+      .open(AddItemDialog, {
+        data: { title: 'Add new Group' },
+      })
+      .afterClosed()
+      .pipe(
+        take(1),
+        filter((result) => !!result)
+      )
+      .subscribe((result) => this.#dataService.addGroup(result));
   }
 }

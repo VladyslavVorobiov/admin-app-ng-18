@@ -1,4 +1,9 @@
 <aside>
+
+    @if (items().length) {
+        <div class="navigation__item--empty"></div>
+    }
+
     <ul class="navigation">
         @for (item of items(); track item.id) {
             <li class="navigation__item"
@@ -33,4 +38,8 @@
             </li>
           }
     </ul>
+    
+    <div class="actions">
+        <ng-content select="[custom-actons]"></ng-content>
+    </div>
 </aside>

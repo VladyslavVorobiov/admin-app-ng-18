@@ -2,4 +2,8 @@ mat-tab-group {
     .mdc-tab__text-label {
         font-size: var(--font-size-medium);
     }
+
+    .mat-mdc-tab-body-wrapper {
+        height: 100%;
+    }
 }

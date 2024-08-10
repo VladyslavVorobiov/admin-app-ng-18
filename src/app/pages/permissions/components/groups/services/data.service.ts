@@ -11,7 +11,7 @@ import {
   tap,
 } from 'rxjs';
 
-import { GROUPS_MOCK, updateGroupNameById } from 'api-mocks';
+import { addGroup, GROUPS_MOCK, updateGroupNameById } from 'api-mocks';
 import { NavigationItem } from 'shared-components';
 import { LoaderService } from 'core-services';
 import { adaptGroupToNavigation } from '../utils/adaptor-group-to-navigation';
@@ -57,6 +57,33 @@ export class DataService {
     this.#loaderService.setLoader(true);
 
     of(updateGroupNameById(group.id, group.title))
+      .pipe(
+        delay(1000),
+        take(1),
+        map((response) => adaptGroupToNavigation(response)),
+        tap((data) => this.#groupNavigationSubject.next(data)),
+        tap((data) =>
+          this.#currentIdSubject.next(
+            this.#currentIdSubject.value || data[0].id
+          )
+        ),
+        catchError((error) => {
+          // Handle error
+
+          this.#groupNavigationSubject.next([]);
+          this.#currentIdSubject.next('');
+
+          return EMPTY;
+        }),
+        finalize(() => this.#loaderService.setLoader(false))
+      )
+      .subscribe();
+  }
+
+  addGroup(name: string) {
+    this.#loaderService.setLoader(true);
+
+    of(addGroup(name))
       .pipe(
         delay(1000),
         take(1),

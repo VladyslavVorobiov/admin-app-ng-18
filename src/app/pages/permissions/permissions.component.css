@@ -6,14 +6,11 @@
 }
 
 .permissions__header {
-    position: relative;
-}
-
-.permissions__header-title {
     margin: 0;
 }
 
 mat-tab-group {
     position: relative;
     top: -38px;
+    height: 100%;
 }

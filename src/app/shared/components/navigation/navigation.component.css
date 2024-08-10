@@ -1,8 +1,11 @@
 :host {
     display: block;
+    min-width: 220px;
 }
 
 aside {
+    --item-height: 50px;
+
     .navigation {
         width: 100%;
         padding: 0;
@@ -18,8 +21,13 @@ aside {
         align-items: center;
         justify-content: space-between;
         gap: 8px;
+
+        box-sizing: border-box;
+        height: var(--item-height);
+        border: 2px solid var(--light-grey);
+        border-right: none;
         padding: 8px;
-        border: 2px solid var(--black);
+
         list-style-type: none;
         background-color: var(--light-grey);
         cursor: pointer;
@@ -40,14 +48,33 @@ aside {
         }
     }
 
-    .title-input {
-        width: 130px;
-        height: 50px;
-    }
-
     .navigation__item--curent {
         background-color: var(--white);
-        border-right: none;
+    }
+
+    .navigation__item--empty {
+        height: var(--item-height);
+    border-right: 2px solid var(--light-grey);
+
+    }
+
+    .title-input {
+        width: 160px;
+        height: 40px;
+
+       ::ng-deep .mat-mdc-form-field-flex {
+            height: 40px;
+        }
+
+        ::ng-deep .mat-mdc-form-field-infix {
+            padding: 8px 0;
+        }
+    }
+
+    .actions {
+        display: flex;
+        justify-content: center;
+        padding: 8px;
     }
 }
 

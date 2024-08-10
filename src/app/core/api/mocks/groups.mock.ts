@@ -221,3 +221,13 @@ export function updateGroupNameById(id: string, name: string): Group[] {
 
   return [...GROUPS_MOCK];
 }
+
+export function addGroup(name: string): Group[] {
+  GROUPS_MOCK.push({
+    id: `${Math.random()}-${name}`,
+    name: name,
+    roles: [],
+  });
+
+  return GROUPS_MOCK;
+}

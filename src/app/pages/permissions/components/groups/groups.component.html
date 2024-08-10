@@ -4,7 +4,14 @@
   [currentId]="(currentId$ | async ) || ''"
   (clickedItem)="onGroupClick($event)"
   (itemChanged)="onItemChanged($event)"
-/>
+>
+  <button ngProjectAs="[custom-actons]"
+    mat-stroked-button
+    (click)="onAddGroup()"
+  >
+    <mat-icon fontIcon="add"></mat-icon> Add new Group
+  </button>
+</app-navigation>
 
 <div class="groups-content">
 
