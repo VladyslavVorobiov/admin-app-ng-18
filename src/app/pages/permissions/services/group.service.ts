@@ -17,10 +17,12 @@ import { Group } from 'api-models';
 import { addGroup, getGroups, updateGroupName } from 'api-mocks';
 import { NavigationItem } from 'shared-components';
 import { LoaderService } from 'core-services';
-import { adaptGroupToNavigation } from '../utils/adaptor-group-to-navigation';
+import { adaptGroupToNavigation } from '../components/groups/utils/adaptor-group-to-navigation';
 
-@Injectable()
-export class DataService {
+@Injectable({
+  providedIn: 'root',
+})
+export class GroupService {
   #loaderService = inject(LoaderService);
 
   #currentIdSubject = new BehaviorSubject<string>('');

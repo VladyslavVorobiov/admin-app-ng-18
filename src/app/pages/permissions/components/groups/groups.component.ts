@@ -15,7 +15,7 @@ import {
   NavigationComponent,
   NavigationItem,
 } from 'shared-components';
-import { DataService } from './services/data.service';
+import { GroupService } from '../../services/group.service';
 
 @Component({
   standalone: true,
@@ -24,10 +24,9 @@ import { DataService } from './services/data.service';
   styleUrls: ['./groups.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NavigationComponent, AsyncPipe, MatIcon, MatButtonModule],
-  providers: [DataService],
 })
 export class GroupsComponent implements AfterViewInit {
-  #dataService = inject(DataService);
+  #dataService = inject(GroupService);
   #dialog = inject(MatDialog);
 
   groupNavigation$: Observable<NavigationItem[]> =
