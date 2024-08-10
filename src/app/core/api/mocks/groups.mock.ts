@@ -1,4 +1,5 @@
 import { Group, Right } from 'api-models';
+import { NavigationItem } from 'shared-components';
 
 export const GROUPS_MOCK: Group[] = [
   {
@@ -211,13 +212,17 @@ export const GROUPS_MOCK: Group[] = [
   },
 ];
 
-export function updateGroupNameById(id: string, name: string): Group[] {
+export function getGroups(): Group[] {
+  return GROUPS_MOCK;
+}
+
+export function updateGroupName({ id, title }: NavigationItem): Group[] {
   const groupIndex = GROUPS_MOCK.findIndex((group) => group.id === id);
 
   if (groupIndex === -1) return GROUPS_MOCK;
 
   const group = GROUPS_MOCK[groupIndex];
-  group.name = name;
+  group.name = title;
 
   return [...GROUPS_MOCK];
 }

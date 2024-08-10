@@ -1,8 +1,8 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
 } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -26,7 +26,7 @@ import { DataService } from './services/data.service';
   imports: [NavigationComponent, AsyncPipe, MatIcon, MatButtonModule],
   providers: [DataService],
 })
-export class GroupsComponent implements OnInit {
+export class GroupsComponent implements AfterViewInit {
   #dataService = inject(DataService);
   #dialog = inject(MatDialog);
 
@@ -35,7 +35,7 @@ export class GroupsComponent implements OnInit {
 
   currentId$: Observable<string> = this.#dataService.currentId$;
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.#dataService.loadGroups();
   }
 
