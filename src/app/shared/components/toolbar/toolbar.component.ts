@@ -12,8 +12,14 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatOption, MatSelect } from '@angular/material/select';
+import {
+  MatOption,
+  MatSelect,
+  MatSelectChange,
+} from '@angular/material/select';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs';
+
+import { RoleFilter } from 'api-models';
 
 @Component({
   standalone: true,
@@ -33,15 +39,20 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs';
 export class ToolbarComponent implements OnInit {
   header = input.required<string>();
   searchChanged = output<string>();
-  filterChanged = output<string>();
+  filterChanged = output<MatSelectChange>();
 
   searchControl = new FormControl<string>('');
 
   options = [
-    { value: 'all', label: 'Show all' },
-    { value: 'name', label: 'Name' },
-    { value: 'description', label: 'Description' },
+    { value: RoleFilter.All, label: 'Show all' },
+    { value: RoleFilter.Admin, label: 'Admin roles' },
+    { value: RoleFilter.Manager, label: 'Manager roles' },
+    { value: RoleFilter.User, label: 'User roles' },
+    { value: RoleFilter.Guest, label: 'Guest roles' },
+    { value: RoleFilter.Sales, label: 'Sales roles' },
   ];
+
+  defaultFilter = this.options[0];
 
   #destroyRef = inject(DestroyRef);
 

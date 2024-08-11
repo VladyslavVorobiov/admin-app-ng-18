@@ -18,14 +18,14 @@ import { addGroup, getGroups, updateGroupName } from 'api-mocks';
 import { NavigationItem } from 'shared-components';
 import { LoaderService } from 'core-services';
 import { adaptGroupToNavigation } from '../components/groups/utils/adaptor-group-to-navigation';
-import { RolesService } from './roles.service';
+import { GroupRolesService } from './group-roles.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GroupService {
   #loaderService = inject(LoaderService);
-  #rolesService: RolesService = inject(RolesService);
+  #groupRolesService: GroupRolesService = inject(GroupRolesService);
 
   #currentIdSubject = new BehaviorSubject<string>('');
   public currentId$ = this.#currentIdSubject.asObservable();
@@ -62,7 +62,7 @@ export class GroupService {
       if (this.#currentIdSubject.value) return;
 
       this.setCurrentId(data[0].id);
-      this.#rolesService.getRolesByGroupId(data[0].id);
+      this.#groupRolesService.getRolesByGroupId(data[0].id);
     }),
     catchError((error) => {
       // Handle error ...

@@ -1,4 +1,4 @@
-import { Right, Role } from 'api-models';
+import { Right, Role, RoleFilter } from 'api-models';
 import { GROUPS_MOCK } from './groups.mock';
 
 export const ROLES_MOCK: Role[] = [
@@ -76,7 +76,21 @@ export const ROLES_MOCK: Role[] = [
     name: 'Executor',
     rights: [Right.Execute],
   },
+  {
+    id: '10-Mediator',
+    name: 'Mediator',
+    rights: [Right.Publish, Right.Restore],
+  },
 ];
+
+export const FILTER_ROLE = {
+  [RoleFilter.All]: [...ROLES_MOCK],
+  [RoleFilter.Admin]: ROLES_MOCK.slice(0, 5),
+  [RoleFilter.Manager]: ROLES_MOCK.slice(2, 4),
+  [RoleFilter.User]: ROLES_MOCK.slice(6, 7),
+  [RoleFilter.Guest]: ROLES_MOCK.slice(7, 8),
+  [RoleFilter.Sales]: ROLES_MOCK.slice(3, 7),
+};
 
 export function getRolesByGroupId(
   id: string,

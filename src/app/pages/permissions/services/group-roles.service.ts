@@ -14,15 +14,15 @@ import {
   tap,
 } from 'rxjs';
 
-import { getRolesByGroupId, ROLES_MOCK, saveRolesForGroup } from 'api-mocks';
-import { Role } from 'api-models';
+import { FILTER_ROLE, getRolesByGroupId, saveRolesForGroup } from 'api-mocks';
+import { Role, RoleFilter } from 'api-models';
 import { LoaderService } from 'core-services';
 import { RoleView } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RolesService {
+export class GroupRolesService {
   #loaderService = inject(LoaderService);
 
   #initialRoles: Role[] = [];
@@ -30,6 +30,7 @@ export class RolesService {
   #groupId: string = '';
   #pageEvent: PageEvent = { pageIndex: 0, pageSize: 10, length: 0 };
   #searchTerm: string = '';
+  #filter: RoleFilter = RoleFilter.All;
 
   #hasRolesChangesSubject = new BehaviorSubject<boolean>(false);
   public hasRolesChanges$ = this.#hasRolesChangesSubject.asObservable();
@@ -63,7 +64,7 @@ export class RolesService {
     tap(() => this.#hasRolesChangesSubject.next(false))
   );
 
-  public roles$: Observable<RoleView[]> = merge(
+  public groupRoles$: Observable<RoleView[]> = merge(
     this.#getRolesStream$,
     this.#saveRolesForGroupStream$
   ).pipe(
@@ -71,8 +72,11 @@ export class RolesService {
     map((roles) => {
       const rolesIds = roles.map((role) => role.id);
 
+      // Simulate filter
+      let availableRoles = FILTER_ROLE[this.#filter];
+
       // Simulate search
-      const availableRoles = ROLES_MOCK.filter((role) =>
+      availableRoles = availableRoles.filter((role) =>
         role.name.toLowerCase().includes(this.#searchTerm.trim().toLowerCase())
       );
 
@@ -81,12 +85,7 @@ export class RolesService {
         checked: rolesIds.includes(role.id),
       }));
 
-      // Simulate total number of roles
-      this.#totalSubject.next(
-        this.#searchTerm
-          ? this.#currentRoles.length
-          : this.#currentRoles.length * 2
-      );
+      this.#totalSubject.next(this.#currentRoles.length);
       return this.#currentRoles;
     }),
     catchError((error) => {
@@ -106,6 +105,11 @@ export class RolesService {
 
   searchRoles(searchTerm: string) {
     this.#searchTerm = searchTerm;
+    this.#getRolesSubject.next(this.#groupId);
+  }
+
+  filterRoles(filter: RoleFilter) {
+    this.#filter = filter;
     this.#getRolesSubject.next(this.#groupId);
   }
 

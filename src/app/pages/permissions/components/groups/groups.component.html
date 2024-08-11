@@ -13,7 +13,7 @@
 </app-navigation>
 
 <div class="group-content">
-  <app-toolbar header="Roles" (searchChanged)="onSearchChanged($event)"/>
+  <app-toolbar header="Roles" (searchChanged)="onSearchChanged($event)" (filterChanged)="onFilterChanged($event)"/>
 
   <ul class="roles-list">
     <li *ngFor="let role of (roles$ | async)" class="roles-list__item">

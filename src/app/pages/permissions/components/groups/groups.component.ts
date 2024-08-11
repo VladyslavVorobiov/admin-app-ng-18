@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSelectChange } from '@angular/material/select';
 import { filter, Observable, take } from 'rxjs';
 
 import {
@@ -20,7 +21,7 @@ import {
 } from 'shared-components';
 import { PAGE_SIZES } from 'shared-configs';
 import { GroupService } from '../../services/group.service';
-import { RolesService } from '../../services/roles.service';
+import { GroupRolesService } from '../../services/group-roles.service';
 import { RoleView } from '../../models';
 
 @Component({
@@ -42,16 +43,17 @@ import { RoleView } from '../../models';
 })
 export class GroupsComponent implements AfterViewInit {
   #groupService: GroupService = inject(GroupService);
-  #rolesService: RolesService = inject(RolesService);
+  #groupRolesService: GroupRolesService = inject(GroupRolesService);
   #dialog: MatDialog = inject(MatDialog);
 
   groupNavigation$: Observable<NavigationItem[]> =
     this.#groupService.groupNavigation$;
   currentId$: Observable<string> = this.#groupService.currentId$;
 
-  roles$: Observable<RoleView[]> = this.#rolesService.roles$;
-  total$: Observable<number> = this.#rolesService.total$;
-  hasRolesChanges$: Observable<boolean> = this.#rolesService.hasRolesChanges$;
+  roles$: Observable<RoleView[]> = this.#groupRolesService.groupRoles$;
+  total$: Observable<number> = this.#groupRolesService.total$;
+  hasRolesChanges$: Observable<boolean> =
+    this.#groupRolesService.hasRolesChanges$;
 
   public readonly pageSizes: number[] = PAGE_SIZES;
   public pageSize: number = PAGE_SIZES[0];
@@ -63,7 +65,7 @@ export class GroupsComponent implements AfterViewInit {
 
   onGroupClick(group: NavigationItem) {
     this.#groupService.setCurrentId(group.id);
-    this.#rolesService.getRolesByGroupId(group.id);
+    this.#groupRolesService.getRolesByGroupId(group.id);
   }
 
   onGroupNameChanged(group: NavigationItem) {
@@ -71,7 +73,11 @@ export class GroupsComponent implements AfterViewInit {
   }
 
   onSearchChanged(searchTerm: string) {
-    this.#rolesService.searchRoles(searchTerm);
+    this.#groupRolesService.searchRoles(searchTerm);
+  }
+
+  onFilterChanged({ value }: MatSelectChange) {
+    this.#groupRolesService.filterRoles(value);
   }
 
   onAddGroup() {
@@ -88,17 +94,17 @@ export class GroupsComponent implements AfterViewInit {
   }
 
   onRoleChecked({ checked }: MatCheckboxChange, role: RoleView) {
-    this.#rolesService.updateRole(role, checked);
+    this.#groupRolesService.updateRole(role, checked);
   }
 
   onSaveRoles() {
-    this.#rolesService.saveRolesForGroup();
+    this.#groupRolesService.saveRolesForGroup();
   }
 
   onPageChanged(pageEvent: PageEvent) {
     this.pageSize = pageEvent.pageSize;
     this.pageIndex = pageEvent.pageIndex;
 
-    this.#rolesService.onPageChanged(pageEvent);
+    this.#groupRolesService.onPageChanged(pageEvent);
   }
 }
