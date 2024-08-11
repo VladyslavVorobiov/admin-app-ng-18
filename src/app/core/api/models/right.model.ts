@@ -1,4 +1,4 @@
-export enum Right {
+export enum RightName {
   Create = 'create',
   Read = 'read',
   Update = 'update',
@@ -9,5 +9,9 @@ export enum Right {
   Archive = 'archive',
   Restore = 'restore',
   Publish = 'publish',
-  Execute = 'execute',
+}
+
+export interface Right {
+  id: string;
+  name: RightName;
 }

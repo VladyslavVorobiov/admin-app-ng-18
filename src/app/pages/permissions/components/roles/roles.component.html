@@ -1,3 +1,42 @@
-<p>
-  roles works!
-</p>
+<app-navigation
+  [items]="(roleNavigation$ | async) || []"
+  [currentId]="(currentId$ | async ) || ''"
+  (clickedItem)="onRoleClick($event)"
+  (itemChanged)="onRoleNameChanged($event)"
+>
+  <button ngProjectAs="[custom-actons]"
+    mat-stroked-button
+    (click)="onAddRole()"
+  >
+    <mat-icon fontIcon="add"></mat-icon> Add new Role
+  </button>
+</app-navigation>
+
+<div class="role-content">
+  <app-toolbar header="Rights" (searchChanged)="onSearchChanged($event)" (filterChanged)="onFilterChanged($event)"/>
+
+  <ul class="rights-list">
+    <li *ngFor="let right of (rights$ | async)" class="rights-list__item">
+      <mat-checkbox [checked]="right.checked" (change)="onRightChecked($event, right)">{{ right.name }}</mat-checkbox>
+    </li>
+    @if (!(rights$ | async)?.length) {
+      <li class="rights-list__empty">No rights found</li>
+    }
+  </ul>
+
+  <div class="rights-actions">
+    <button
+      mat-stroked-button
+      [disabled]="!(hasRightsChanges$ | async)"
+      (click)="onSaveRights()"
+    >
+      Save rights
+    </button>
+  </div>
+
+  <mat-paginator [length]="total$ | async"
+                [pageSizeOptions]="pageSizes"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                (page)="onPageChanged($event)"/>
+</div>

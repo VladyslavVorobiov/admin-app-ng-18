@@ -1,0 +1,37 @@
+:host {
+    display: flex;
+    height: 100%;
+    gap: 24px;
+}
+
+.role-content {
+    width: 100%;
+    padding: 16px 0;
+}
+
+.rights-list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.rights-list__item {
+    list-style-type: none;
+    border: 1px solid var(--light-grey);
+    border-bottom: none;
+}
+
+.rights-list__item:last-child {
+    border-bottom: 1px solid var(--light-grey);
+}
+
+.rights-list__empty {
+    padding: 16px;
+    border: 1px solid var(--light-grey);
+}
+
+.rights-actions {
+    margin: 12px 0;
+    display: flex;
+    justify-content: end;
+}

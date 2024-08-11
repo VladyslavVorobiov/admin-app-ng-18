@@ -1,4 +1,4 @@
-import { Group, Right } from 'api-models';
+import { Group } from 'api-models';
 import { NavigationItem } from 'shared-components';
 import { ROLES_MOCK } from './roles.mock';
 

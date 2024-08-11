@@ -1,85 +1,58 @@
-import { Right, Role, RoleFilter } from 'api-models';
+import { Role, RoleFilter } from 'api-models';
+import { NavigationItem } from 'shared-components';
 import { GROUPS_MOCK } from './groups.mock';
+import { RIGHTS_MOCK } from './rights.mock';
 
 export const ROLES_MOCK: Role[] = [
   {
     id: '1-Pizza-editor',
     name: 'Pizza editor',
-    rights: [
-      Right.Create,
-      Right.Read,
-      Right.Update,
-      Right.Delete,
-      Right.Execute,
-    ],
+    rights: RIGHTS_MOCK.slice(0, 5),
   },
   {
     id: '2-Dust-sniffer',
     name: 'Dust sniffer',
-    rights: [Right.Create, Right.Read],
+    rights: RIGHTS_MOCK.slice(3, 5),
   },
   {
     id: '3-Poker-cheater',
     name: 'Poker cheater',
-    rights: [Right.Update, Right.Delete],
+    rights: RIGHTS_MOCK.slice(5, 8),
   },
   {
     id: '4-Milk-user',
     name: 'Milk user',
-    rights: [Right.Read],
+    rights: RIGHTS_MOCK.slice(1, 8),
   },
   {
     id: '5-Admin',
     name: 'Admin',
-    rights: [
-      Right.Create,
-      Right.Read,
-      Right.Update,
-      Right.Delete,
-      Right.Move,
-      Right.Migrate,
-      Right.Clone,
-      Right.Archive,
-      Right.Restore,
-      Right.Publish,
-      Right.Execute,
-    ],
+    rights: RIGHTS_MOCK.slice(0, 9),
   },
   {
     id: '6-Manager',
     name: 'Manager',
-    rights: [
-      Right.Create,
-      Right.Read,
-      Right.Update,
-      Right.Delete,
-      Right.Move,
-      Right.Migrate,
-      Right.Clone,
-      Right.Archive,
-      Right.Restore,
-      Right.Publish,
-    ],
+    rights: RIGHTS_MOCK.slice(3, 9),
   },
   {
     id: '7-User',
     name: 'User',
-    rights: [Right.Create, Right.Read, Right.Update, Right.Delete],
+    rights: RIGHTS_MOCK.slice(0, 2),
   },
   {
     id: '8-Guest',
     name: 'Guest',
-    rights: [Right.Read],
+    rights: [RIGHTS_MOCK[1]],
   },
   {
     id: '9-Executor',
     name: 'Executor',
-    rights: [Right.Execute],
+    rights: RIGHTS_MOCK.slice(6, 9),
   },
   {
     id: '10-Mediator',
     name: 'Mediator',
-    rights: [Right.Publish, Right.Restore],
+    rights: RIGHTS_MOCK.slice(3, 10),
   },
 ];
 
@@ -114,4 +87,29 @@ export function saveRolesForGroup(id: string, roles: Role[]): Role[] {
   GROUPS_MOCK[groupIndex].roles = roles;
 
   return roles;
+}
+
+export function getRoles(): Role[] {
+  return ROLES_MOCK;
+}
+
+export function updateRoleName({ id, title }: NavigationItem): Role[] {
+  const roleIndex = ROLES_MOCK.findIndex((role) => role.id === id);
+
+  if (roleIndex === -1) return ROLES_MOCK;
+
+  const role = ROLES_MOCK[roleIndex];
+  role.name = title;
+
+  return [...ROLES_MOCK];
+}
+
+export function addRole(name: string): Role[] {
+  ROLES_MOCK.push({
+    id: `${Math.random()}-${name}`,
+    name: name,
+    rights: [],
+  });
+
+  return ROLES_MOCK;
 }
