@@ -17,13 +17,14 @@
 
   <ul class="roles-list">
     <li *ngFor="let role of (roles$ | async)" class="roles-list__item">
-      <mat-checkbox [checked]="role.checked">{{ role.name }}</mat-checkbox>
+      <mat-checkbox [checked]="role.checked" (change)="onRoleChecked($event, role)">{{ role.name }}</mat-checkbox>
     </li>
   </ul>
 
   <div class="group-actions">
     <button
       mat-stroked-button
+      [disabled]="!(hasRolesChanges$ | async)"
       (click)="onSaveRoles()"
     >
       Save roles

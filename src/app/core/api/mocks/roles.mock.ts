@@ -83,3 +83,13 @@ export function getRolesByGroupId(id: string): Role[] {
 
   return groupIndex === -1 ? [] : [...GROUPS_MOCK[groupIndex].roles];
 }
+
+export function saveRolesForGroup(id: string, roles: Role[]): Role[] {
+  const groupIndex = GROUPS_MOCK.findIndex((group) => group.id === id);
+
+  if (groupIndex === -1) return [];
+
+  GROUPS_MOCK[groupIndex].roles = roles;
+
+  return roles;
+}
