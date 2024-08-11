@@ -45,8 +45,7 @@ export class RolesService {
         getRolesByGroupId(
           id,
           this.#pageEvent.pageSize,
-          this.#pageEvent.pageIndex,
-          this.#searchTerm
+          this.#pageEvent.pageIndex
         )
       )
     ),
@@ -72,13 +71,22 @@ export class RolesService {
     map((roles) => {
       const rolesIds = roles.map((role) => role.id);
 
-      this.#currentRoles = ROLES_MOCK.map((role) => ({
+      // Simulate search
+      const availableRoles = ROLES_MOCK.filter((role) =>
+        role.name.toLowerCase().includes(this.#searchTerm.trim().toLowerCase())
+      );
+
+      this.#currentRoles = availableRoles.map((role) => ({
         ...role,
         checked: rolesIds.includes(role.id),
       }));
 
       // Simulate total number of roles
-      this.#totalSubject.next(this.#currentRoles.length * 2);
+      this.#totalSubject.next(
+        this.#searchTerm
+          ? this.#currentRoles.length
+          : this.#currentRoles.length * 2
+      );
       return this.#currentRoles;
     }),
     catchError((error) => {
@@ -94,6 +102,11 @@ export class RolesService {
 
     this.#groupId = id;
     this.#getRolesSubject.next(id);
+  }
+
+  searchRoles(searchTerm: string) {
+    this.#searchTerm = searchTerm;
+    this.#getRolesSubject.next(this.#groupId);
   }
 
   onPageChanged(pageEvent: PageEvent) {

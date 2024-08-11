@@ -2,7 +2,7 @@
   [items]="(groupNavigation$ | async) || []"
   [currentId]="(currentId$ | async ) || ''"
   (clickedItem)="onGroupClick($event)"
-  (itemChanged)="onItemChanged($event)"
+  (itemChanged)="onGroupNameChanged($event)"
 >
   <button ngProjectAs="[custom-actons]"
     mat-stroked-button
@@ -13,12 +13,15 @@
 </app-navigation>
 
 <div class="group-content">
-  <app-toolbar header="Roles"/>
+  <app-toolbar header="Roles" (searchChanged)="onSearchChanged($event)"/>
 
   <ul class="roles-list">
     <li *ngFor="let role of (roles$ | async)" class="roles-list__item">
       <mat-checkbox [checked]="role.checked" (change)="onRoleChecked($event, role)">{{ role.name }}</mat-checkbox>
     </li>
+    @if (!(roles$ | async)?.length) {
+      <li class="roles-list__empty">No roles found</li>
+    }
   </ul>
 
   <div class="group-actions">

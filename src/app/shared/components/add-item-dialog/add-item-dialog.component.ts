@@ -41,7 +41,7 @@ export class AddItemDialog {
   readonly data = inject<AddItemDialogData>(MAT_DIALOG_DATA);
   readonly item = model('');
 
-  onCancel(): void {
+  onCancel() {
     this.dialogRef.close();
   }
 }

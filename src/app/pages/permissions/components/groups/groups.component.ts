@@ -66,8 +66,12 @@ export class GroupsComponent implements AfterViewInit {
     this.#rolesService.getRolesByGroupId(group.id);
   }
 
-  onItemChanged(group: NavigationItem) {
+  onGroupNameChanged(group: NavigationItem) {
     this.#groupService.updateGroup(group);
+  }
+
+  onSearchChanged(searchTerm: string) {
+    this.#rolesService.searchRoles(searchTerm);
   }
 
   onAddGroup() {
@@ -91,7 +95,7 @@ export class GroupsComponent implements AfterViewInit {
     this.#rolesService.saveRolesForGroup();
   }
 
-  public onPageChanged(pageEvent: PageEvent): void {
+  onPageChanged(pageEvent: PageEvent) {
     this.pageSize = pageEvent.pageSize;
     this.pageIndex = pageEvent.pageIndex;
 

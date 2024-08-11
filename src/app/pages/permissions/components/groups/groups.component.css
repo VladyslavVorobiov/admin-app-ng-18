@@ -25,6 +25,11 @@
     border-bottom: 1px solid var(--light-grey);
 }
 
+.roles-list__empty {
+    padding: 16px;
+    border: 1px solid var(--light-grey);
+}
+
 .group-actions {
     margin: 12px 0;
     display: flex;
