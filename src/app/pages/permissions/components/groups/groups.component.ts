@@ -9,6 +9,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { filter, Observable, take } from 'rxjs';
 
 import {
@@ -17,6 +18,7 @@ import {
   NavigationItem,
   ToolbarComponent,
 } from 'shared-components';
+import { PAGE_SIZES } from 'shared-configs';
 import { GroupService } from '../../services/group.service';
 import { RolesService } from '../../services/roles.service';
 import { RoleView } from '../../models';
@@ -35,6 +37,7 @@ import { RoleView } from '../../models';
     ToolbarComponent,
     MatCheckbox,
     NgFor,
+    MatPaginatorModule,
   ],
 })
 export class GroupsComponent implements AfterViewInit {
@@ -47,7 +50,12 @@ export class GroupsComponent implements AfterViewInit {
   currentId$: Observable<string> = this.#groupService.currentId$;
 
   roles$: Observable<RoleView[]> = this.#rolesService.roles$;
+  total$: Observable<number> = this.#rolesService.total$;
   hasRolesChanges$: Observable<boolean> = this.#rolesService.hasRolesChanges$;
+
+  public readonly pageSizes: number[] = PAGE_SIZES;
+  public pageSize: number = PAGE_SIZES[0];
+  public pageIndex: number = 0;
 
   ngAfterViewInit() {
     this.#groupService.loadGroups();
@@ -81,5 +89,12 @@ export class GroupsComponent implements AfterViewInit {
 
   onSaveRoles() {
     this.#rolesService.saveRolesForGroup();
+  }
+
+  public onPageChanged(pageEvent: PageEvent): void {
+    this.pageSize = pageEvent.pageSize;
+    this.pageIndex = pageEvent.pageIndex;
+
+    this.#rolesService.onPageChanged(pageEvent);
   }
 }

@@ -30,4 +30,10 @@
       Save roles
     </button>
   </div>
+
+  <mat-paginator [length]="total$ | async"
+                [pageSizeOptions]="pageSizes"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                (page)="onPageChanged($event)"/>
 </div>

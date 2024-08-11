@@ -78,8 +78,17 @@ export const ROLES_MOCK: Role[] = [
   },
 ];
 
-export function getRolesByGroupId(id: string): Role[] {
+export function getRolesByGroupId(
+  id: string,
+  limit: number,
+  offset: number,
+  search: string
+): Role[] {
   const groupIndex = GROUPS_MOCK.findIndex((group) => group.id === id);
+
+  if (limit !== null && offset !== null) {
+    // backend logic for pagination
+  }
 
   return groupIndex === -1 ? [] : [...GROUPS_MOCK[groupIndex].roles];
 }

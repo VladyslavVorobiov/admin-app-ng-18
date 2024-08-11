@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import {
   BehaviorSubject,
   catchError,
@@ -27,14 +28,28 @@ export class RolesService {
   #initialRoles: Role[] = [];
   #currentRoles: RoleView[] = [];
   #groupId: string = '';
+  #pageEvent: PageEvent = { pageIndex: 0, pageSize: 10, length: 0 };
+  #searchTerm: string = '';
 
   #hasRolesChangesSubject = new BehaviorSubject<boolean>(false);
   public hasRolesChanges$ = this.#hasRolesChangesSubject.asObservable();
 
+  #totalSubject = new BehaviorSubject<number>(0);
+  public total$: Observable<number> = this.#totalSubject.asObservable();
+
   #getRolesSubject = new Subject<string>();
   #getRolesStream$: Observable<Role[]> = this.#getRolesSubject.pipe(
     tap(() => this.#loaderService.setLoader(true)),
-    switchMap((id) => of(getRolesByGroupId(id))),
+    switchMap((id) =>
+      of(
+        getRolesByGroupId(
+          id,
+          this.#pageEvent.pageSize,
+          this.#pageEvent.pageIndex,
+          this.#searchTerm
+        )
+      )
+    ),
     delay(1000),
     tap((roles) => (this.#initialRoles = roles)),
     tap(() => this.#hasRolesChangesSubject.next(false))
@@ -62,6 +77,8 @@ export class RolesService {
         checked: rolesIds.includes(role.id),
       }));
 
+      // Simulate total number of roles
+      this.#totalSubject.next(this.#currentRoles.length * 2);
       return this.#currentRoles;
     }),
     catchError((error) => {
@@ -77,6 +94,11 @@ export class RolesService {
 
     this.#groupId = id;
     this.#getRolesSubject.next(id);
+  }
+
+  onPageChanged(pageEvent: PageEvent) {
+    this.#pageEvent = pageEvent;
+    this.#getRolesSubject.next(this.#groupId);
   }
 
   updateRole(role: RoleView, checked: boolean) {

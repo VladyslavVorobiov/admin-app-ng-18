@@ -26,7 +26,7 @@
 }
 
 .group-actions {
-    margin-top: 12px;
+    margin: 12px 0;
     display: flex;
     justify-content: end;
 }
