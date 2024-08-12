@@ -1,11 +1,50 @@
 :host {
     display: block;
     min-width: 220px;
+    background-color: var(--white);
+}
+
+@media screen and (max-width: 600px) {
+    :host {
+        position: fixed;
+        z-index: 100;
+        top: 0;
+        left: 0;
+
+        height: 100%;
+        width: 0;
+        min-width: 0;
+
+        overflow-x: hidden;
+        transition: 0.5s;
+    }
+
+    :host.opened {
+        min-width: 220px;
+
+        .aside__actions .aside__menu-button {
+            display: block;
+        }
+    }
 }
 
 aside {
     height: 100%;
     --item-height: 50px;
+
+    .aside__actions {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding: 8px;
+        box-sizing: border-box;
+        height: var(--item-height);
+        border-right: 2px solid var(--light-grey);
+
+        .aside__menu-button {
+            display: none;
+        }
+    }
 
     .navigation {
         width: 100%;
@@ -51,11 +90,6 @@ aside {
 
     .navigation__item--curent {
         background-color: var(--white);
-    }
-
-    .navigation__item--empty {
-        height: var(--item-height);
-        border-right: 2px solid var(--light-grey);
     }
 
     .title-input {

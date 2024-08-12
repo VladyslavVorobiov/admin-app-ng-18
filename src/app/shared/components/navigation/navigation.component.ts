@@ -1,17 +1,25 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  DestroyRef,
+  HostBinding,
   inject,
   input,
+  OnInit,
   output,
 } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { tap } from 'rxjs';
 
+import { MenuService } from 'core-services';
 import { NavigationItem } from './models';
 
 @Component({
@@ -26,9 +34,12 @@ import { NavigationItem } from './models';
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
+    AsyncPipe,
   ],
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
+  @HostBinding('class.opened') openedClass = false;
+
   items = input.required<NavigationItem[]>();
   currentId = input.required<string>();
 
@@ -38,6 +49,13 @@ export class NavigationComponent {
   editable: NavigationItem = { id: '', title: '' };
 
   #snackBar: MatSnackBar = inject(MatSnackBar);
+  #menuService: MenuService = inject(MenuService);
+  #destroyRef: DestroyRef = inject(DestroyRef);
+  #cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+
+  ngOnInit(): void {
+    this.#initMenuListener();
+  }
 
   onItemClick(item: NavigationItem) {
     if (this.editable.id === item.id) return;
@@ -66,6 +84,22 @@ export class NavigationComponent {
 
     this.itemChanged.emit({ ...item, title: newTitle });
     this.#resetEditable();
+  }
+
+  onClose() {
+    this.#menuService.openMenu(false);
+  }
+
+  #initMenuListener() {
+    this.#menuService.opened$
+      .pipe(
+        tap((opened) => {
+          this.openedClass = opened;
+          this.#cdr.markForCheck();
+        }),
+        takeUntilDestroyed(this.#destroyRef)
+      )
+      .subscribe();
   }
 
   #resetEditable() {

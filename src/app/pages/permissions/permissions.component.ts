@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
+import { MenuService } from 'core-services';
 import { GroupsComponent } from './components/groups/groups.component';
 import { RolesComponent } from './components/roles/roles.component';
 
@@ -9,6 +13,18 @@ import { RolesComponent } from './components/roles/roles.component';
   templateUrl: './permissions.component.html',
   styleUrls: ['./permissions.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatTabsModule, GroupsComponent, RolesComponent],
+  imports: [
+    MatTabsModule,
+    GroupsComponent,
+    RolesComponent,
+    MatIcon,
+    MatButtonModule,
+  ],
 })
-export class PermissionsComponent {}
+export class PermissionsComponent {
+  #menuService: MenuService = inject(MenuService);
+
+  onMenuClick() {
+    this.#menuService.openMenu(true);
+  }
+}

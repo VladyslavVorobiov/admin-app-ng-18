@@ -1,0 +1,17 @@
+@media screen and (max-width: 480px) {
+    mat-paginator {
+        .mat-mdc-paginator-page-size {
+            margin-right: 0;
+        }
+
+        .mat-mdc-paginator-range-label {
+            margin: 0 8px;
+        }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    mat-paginator {
+        height: 100px;
+    }
+}

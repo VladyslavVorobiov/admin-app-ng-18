@@ -1,7 +1,11 @@
 <aside>
 
     @if (items().length) {
-        <div class="navigation__item--empty"></div>
+        <div class="aside__actions">
+              <button mat-icon-button class="aside__menu-button" (click)="onClose()">
+                <mat-icon>close</mat-icon>
+              </button>
+        </div>
     }
 
     <ul class="navigation">
